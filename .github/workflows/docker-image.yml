@@ -24,14 +24,18 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
       
+    - name: Build the Docker image
+      run: |
+          docker build -t ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER) -f ./ActionsAPI/Dockerfile .
+          
     - name: Log into registry ${{ env.REGISTRY }}
       uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}  
-      
-    - name: Build the Docker image
+        
+    - name: Docker Publish
       run: |
-          docker build -t ${{ github.repository }}:${{ github.sha }} -t ${{ github.repository }}:latest -f ./ActionsAPI/Dockerfile .
-          docker push ghcr.io/${{ github.repository }} --all-tags
+        docker push ghcr.io/${GITHUB_REPOSITORY,,}:$(date +%Y%m%d.$GITHUB_RUN_NUMBER)
+    
