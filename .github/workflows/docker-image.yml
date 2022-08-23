@@ -13,4 +13,4 @@ jobs:
     - name: Build the Docker image
       run: |
           docker build . --file ./ActionsAPI/Dockerfile --tag testapi:$(date +%s)
-          docker push ghcr.io/lambergluke/testapi:latest --all-tags
+          docker push ghcr.io/lambergluke/testapi:latest
