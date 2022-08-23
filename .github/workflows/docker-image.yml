@@ -2,15 +2,38 @@ name: Docker Image CI
 
 on: [workflow_dispatch]
 
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
 
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
 
     steps:
-    - uses: actions/checkout@v3
+    
+    - name: Checkout Repo
+      uses: actions/checkout@v3
+      
+    - name: Log into registry ${{ env.REGISTRY }}
+      uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}  
+      
     - name: Build the Docker image
       run: |
-          docker build . --file ./ActionsAPI/Dockerfile --tag testapi:$(date +%s)
-          docker push ghcr.io/lambergluke/testapi:latest
+          docker build . --file ./ActionsAPI/Dockerfile --tag ${{ github.repository }}:$(date +%s)
+          docker push ghcr.io/lambergluke/${{ github.repository }}:latest
