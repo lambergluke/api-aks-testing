@@ -36,4 +36,4 @@ jobs:
     - name: Build the Docker image
       run: |
           docker build . --file ./ActionsAPI/Dockerfile --tag ${{ github.repository }}:$(date +%s)
-          docker push ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/${{ github.repository }}:$(date +%s)
