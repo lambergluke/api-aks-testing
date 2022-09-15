@@ -24,4 +24,4 @@ jobs:
         
       - name: Run a multi-line script
         run: |
-          helm repo add api-aks-testing https://ghcr.io/lambergluke/charts/api-aks-testing:1.0.2
+          helm pull api-aks-testing https://ghcr.io/lambergluke/charts/api-aks-testing:1.0.2
