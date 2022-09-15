@@ -1,0 +1,25 @@
+name: Deploy to AKS via helm
+
+on:
+
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+
+  AKS_Deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Helm tool installer
+        uses: Azure/setup-helm@v3.3
+        
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
