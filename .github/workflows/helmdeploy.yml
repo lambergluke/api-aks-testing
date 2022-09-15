@@ -24,7 +24,7 @@ jobs:
         
       - name: Run a multi-line script
         run: |
-          helm pull https://ghcr.io/lambergluke/charts/api-aks-testing:1.0.2
+          helm pull https://ghcr.io/lambergluke/charts/api-aks-testing:1.0.2 --untar
           pwd
           ls -al
-          
+
