@@ -18,7 +18,9 @@ jobs:
 
       - name: Helm tool installer
         uses: Azure/setup-helm@v3.3
-        
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # only needed if version is 'latest'
+        id: install
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
